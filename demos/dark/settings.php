@@ -314,37 +314,37 @@ if(!$_SESSION['sess_id']){
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Date de naissance</label>
-                                    <input type="date" name="dateNais" class="form-control" value=" ">
+                                    <input type="date" name="dateNais" class="form-control" value="<?php echo($_SESSION['sess_datenais']);?> ">
                                 </div>
                                 <div class="form-group">
                                     <label>Télephone</label>
-                                    <input type="text" name="tel"  class="form-control" value=" ">
+                                    <input type="text" name="tel"  class="form-control" value="<?php echo($_SESSION['sess_tel']);?> ">
                                 </div>
                                 <div class="form-group">
                                     <label>Code postal</label>
-                                    <input type="text" name="cp" class="form-control" value=" ">
+                                    <input type="text" name="cp" class="form-control" value="<?php  echo($_SESSION['sess_cp']); ?> ">
                                 </div>
                                 <div class="form-group">
                                     <label>Ville</label>
-                                    <input type="text" name="ville" class="form-control" value=" ">
+                                    <input type="text" name="ville" class="form-control" value="<?php echo($_SESSION['sess_ville']);?> ">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Adresse 1</label>
-                                    <input type="text" name="adresse1" class="form-control" value=" ">
+                                    <input type="text" name="adresse1" class="form-control" value="<?php echo($_SESSION['sess_adresse1']);?> ">
                                 </div>
                                 <div class="form-group">
                                     <label>Adresse 2</label>
-                                    <input type="text" name="adresse2" class="form-control" value="">
+                                    <input type="text" name="adresse2" class="form-control" value="<?php echo($_SESSION['sess_adresse2']);?>">
                                 </div>
                                 <div class="form-group">
                                     <label>Région</label>
-                                    <input type="text" name="region" class="form-control" value=" ">
+                                    <input type="text" name="region" class="form-control" value="<?php echo($_SESSION['sess_region']);?> ">
                                 </div>
                                 <div class="form-group">
                                     <label>Pays</label>
-                                    <input type="text" name="pays" class="form-control" value=" ">
+                                    <input type="text" name="pays" class="form-control" value="<?php echo($_SESSION['sess_pays']);?> ">
                                 </div>
                             </div>
                         </div>

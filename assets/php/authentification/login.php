@@ -23,7 +23,14 @@ include("../config.php");
         $_SESSION['sess_email'] = $row['Email_Compte'];
         $_SESSION['sess_nom'] = $row['Nom_Compte'];
         $_SESSION['sess_prenom'] = $row['Prenom_Compte'];
-        echo("OKOKOOKOKOK");
+        $_SESSION['sess_datenais'] = $row['DateNais_Compte'];
+        $_SESSION['sess_tel'] = $row['Tel_Compte'];
+        $_SESSION['sess_cp'] = $row['Cp_Compte'];
+        $_SESSION['sess_ville'] = $row['Ville_Compte'];
+        $_SESSION['sess_region'] = $row['Region_Compte'];
+        $_SESSION['sess_pays'] = $row['Pays_Compte'];
+        $_SESSION['sess_adresse1'] = $row['Adresse1_Compte'];
+        $_SESSION['sess_adresse2'] = $row['Adresse2_Compte'];
         header('Location:../../../demos/dark/index.php');
       
       } else {
