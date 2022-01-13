@@ -188,14 +188,13 @@ if(!$_SESSION['sess_id']){
                                     <h5 class="mb-0"><?php echo($_SESSION['sess_nom']." ".$_SESSION['sess_prenom']); ?></h5>
                                 </div>
                                 <div class="list-group list-group-flush">
-                                    <a href="#" class="list-group-item" data-sidebar-target="#settings">Settings</a>
-                                    <a href="http://bifor.laborasyon.com/login" class="list-group-item text-danger"
-                                       data-sidebar-target="#settings">Sign Out!</a>
+                                    <a href="#" class="list-group-item" data-sidebar-target="#settings">Paramètres</a>
+                                    <a href="../../assets/php/authentification/logout.php" class="list-group-item text-danger">Déconnexion !</a>
                                 </div>
                                 <div class="pb-0 p-4">
                                     <div class="mb-4">
                                         <h6 class="d-flex justify-content-between">
-                                            Completed Tasks
+                                            Taches complétées
                                             <span class="float-right">%68</span>
                                         </h6>
                                         <div class="progress" style="height:5px;">
@@ -314,7 +313,9 @@ if(!$_SESSION['sess_id']){
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Date de naissance</label>
-                                    <input type="date" name="dateNais" class="form-control" value="<?php echo($_SESSION['sess_datenais']);?> ">
+                                    <input type="date" name="dateNais" class="form-control" <?php 	
+                                    $date = date('Y-m-d',strtotime($_SESSION['sess_datenais']));echo("value='$date'"); ?>>
+                                 
                                 </div>
                                 <div class="form-group">
                                     <label>Télephone</label>
