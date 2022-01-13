@@ -9,7 +9,7 @@ include '../config.php';
 session_start();
 
 if(!isset($_POST["pwd"]) || !isset($_POST["old_pwd"]) || !isset($_POST["re_pwd"])){
-    //header("location:../../../demos/dark/settings.php");
+    header("location:../../../demos/dark/settings.php");
 }else{
 
 
@@ -21,10 +21,10 @@ $re_pwd = trim($_POST['re_pwd']);
 $re_pwd = hash('sha256',$re_pwd);
 
 if(($password=="" || $old_pwd=="" || $re_pwd=="")){
-    //header("location:../../../demos/dark/settings.php");
+    header("location:../../../demos/dark/settings.php");
 }
 if($password != $re_pwd){
-    //header("location:../../../demos/dark/settings.php");
+    header("location:../../../demos/dark/settings.php");
 }else{
 
     try{
@@ -37,7 +37,7 @@ if($password != $re_pwd){
 
         if($count == 1 && !empty($row)) {
             if($old_pwd != $row['Password_Compte']){
-                //header("location:../../../demos/dark/settings.php");
+                header("location:../../../demos/dark/settings.php");
             }else{
 
             try{
@@ -49,13 +49,13 @@ if($password != $re_pwd){
                 echo $sql . "<br>" . $e->getMessage();
               }
           
-            //header('Location:../../../demos/dark/settings.php');
+            header('Location:../../../demos/dark/settings.php');
           } 
 
-        //header("location:../../../demos/dark/settings.php");
+        header("location:../../../demos/dark/settings.php");
         }else {
             $msg = "Invalid old password!";
-            //header('Location:../../../demos/dark/settigs.php');
+            header('Location:../../../demos/dark/settigs.php');
           }
       } catch(PDOException $e) {
         echo $sql . "<br>" . $e->getMessage();
