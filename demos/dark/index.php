@@ -1,3 +1,10 @@
+<?php
+session_start();
+if(!$_SESSION['sess_id']){
+    header('Location: login.html');
+ }
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -18,6 +25,9 @@
     <!-- App css -->
     <link rel="stylesheet" href="../../assets/css/app.min.css" type="text/css">
 
+    <script src="../../assets/js/raphael-2.1.4.min.js"></script>
+<script src="../../assets/js/justgage.js"></script>
+
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -37,32 +47,6 @@
         <div class="header-container">
             <div class="header-body">
                 <div class="header-body-left">
-                    <ul class="navbar-nav">
-                        <li class="nav-item navigation-toggler">
-                            <a href="#" class="nav-link">
-                                <i class="ti-menu"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <div class="header-search-form">
-                                <form>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <button class="btn">
-                                                <i class="ti-search"></i>
-                                            </button>
-                                        </div>
-                                        <input type="text" class="form-control" placeholder="Search something...">
-                                        <div class="input-group-append">
-                                            <button class="btn header-search-close-btn">
-                                                <i data-feather="x"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </li>
-                    </ul>
                 </div>
 
                 <div class="header-body-right">
@@ -195,31 +179,22 @@
                         <li class="nav-item dropdown">
                             <a href="#" class="nav-link profile-nav-link dropdown-toggle" title="User menu"
                                data-toggle="dropdown">
-                                <span class="mr-2 d-sm-inline d-none">Bony Gidden</span>
-                                <figure class="avatar avatar-sm">
-                                    <img src="../../assets/media/image/user/man_avatar3.jpg"
-                                         class="rounded-circle"
-                                         alt="avatar">
-                                </figure>
+                                <span class="mr-2 d-sm-inline d-none"><?php echo($_SESSION['sess_nom']." ".$_SESSION['sess_prenom']); ?></span>
+                                
                             </a>
                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-big">
-                                <div class="text-center py-4"
-                                     data-background-image="../../assets/media/image/image1.jpg">
-                                    <figure class="avatar avatar-lg mb-3 border-0">
-                                        <img src="../../assets/media/image/user/man_avatar3.jpg"
-                                             class="rounded-circle" alt="image">
-                                    </figure>
-                                    <h5 class="mb-0">Bony Gidden</h5>
+                                <div class="text-center py-4">
+                                    
+                                    <h5 class="mb-0"><?php echo($_SESSION['sess_nom']." ".$_SESSION['sess_prenom']); ?></h5>
                                 </div>
                                 <div class="list-group list-group-flush">
-                                    <a href="#" class="list-group-item" data-sidebar-target="#settings">Settings</a>
-                                    <a href="http://bifor.laborasyon.com/login" class="list-group-item text-danger"
-                                       data-sidebar-target="#settings">Sign Out!</a>
+                                    <a href="#" class="list-group-item" data-sidebar-target="#settings">Paramètres</a>
+                                    <a href="../../assets/php/authentification/logout.php" class="list-group-item text-danger">Déconnexion !</a>
                                 </div>
                                 <div class="pb-0 p-4">
                                     <div class="mb-4">
                                         <h6 class="d-flex justify-content-between">
-                                            Completed Tasks
+                                            Taches complétées
                                             <span class="float-right">%68</span>
                                         </h6>
                                         <div class="progress" style="height:5px;">
@@ -256,47 +231,28 @@
         <!-- begin::navigation -->
         <div class="navigation">
             <div class="logo">
-                <a href=index.html>
+                <a href=index.php>
                     <img src="../../assets/media/image/logo.png" alt="logo">
                 </a>
             </div>
             <ul>
                 <li>
-                    <a  href="dashboard.html">
+                    <a  class="active" href="index.php">
                         <i class="nav-link-icon ti-pie-chart"></i>
                         <span class="nav-link-label">Dashboard</span>
                         <span class="badge badge-danger badge-small">2</span>
                     </a>
                 </li>
                 <li>
-                    <a  href="files.html">
+                    <a  href="files.php">
                         <i class="nav-link-icon ti-file"></i>
-                        <span class="nav-link-label">Files</span>
+                        <span class="nav-link-label">Fichiers</span>
                     </a>
                 </li>
                 <li>
-                    <a  href="activities.html">
-                        <i class="nav-link-icon ti-pulse"></i>
-                        <span class="nav-link-label">Activities</span>
-                        <span class="badge badge-warning">New</span>
-                    </a>
-                </li>
-                <li>
-                    <a  href="users.html">
-                        <i class="nav-link-icon ti-user"></i>
-                        <span class="nav-link-label">Users</span>
-                    </a>
-                </li>
-                <li class="flex-grow-1">
-                    <a href="alert.html">
-                        <i class="nav-link-icon ti-layers"></i>
-                        <span class="nav-link-label">Components</span>
-                    </a>
-                </li>
-                <li>
-                    <a  href="settings.html">
+                    <a  href="settings.php">
                         <i class="nav-link-icon ti-settings"></i>
-                        <span class="nav-link-label">Settings</span>
+                        <span class="nav-link-label">Paramètres</span>
                     </a>
                 </li>
             </ul>
@@ -1088,10 +1044,25 @@
             <!-- Sidebar - Storage -->
             <div class="sidebar primary-sidebar show" id="storage">
                 <div class="sidebar-header">
-                    <h4>Storage Overview</h4>
+                    <h4>Résumer du stockage</h4>
                 </div>
                 <div class="sidebar-content">
-                    <div id="justgage_five" class="mb-3"></div>
+                
+                    <div id="jauge" class="mb-3 200x160px"></div>
+                    <script>
+                        var g = new JustGage({
+                            id: "jauge",
+                            value: 10,
+                            symbol: '%',
+                            min: 0,
+                            max: 100,
+                            gaugeWidthScale: 0.6,
+                            title: "Stockage utilisé",
+                            valueFontColor: '#FFFFFF',
+                            
+                              
+                        });
+                    </script>
                     <div>
                         <div class="list-group list-group-flush mb-3">
                             <a href="#" class="list-group-item px-0 d-flex align-items-center">
@@ -1107,7 +1078,7 @@
                                     <span class="small text-muted">259 Files</span>
                                 </div>
                                 <div>
-                                    <h5 class="text-primary">15.7 GB</h5>
+                                    <h5 class="text-primary">15.7 Go</h5>
                                 </div>
                             </a>
                             <a href="#" class="list-group-item px-0 d-flex align-items-center">
@@ -1123,7 +1094,7 @@
                                     <span class="small text-muted">8 Files</span>
                                 </div>
                                 <div>
-                                    <h5 class="text-primary">20 GB</h5>
+                                    <h5 class="text-primary">20 Go</h5>
                                 </div>
                             </a>
                             <a href="#" class="list-group-item px-0 d-flex align-items-center">
@@ -1139,7 +1110,7 @@
                                     <span class="small text-muted">46 Files</span>
                                 </div>
                                 <div>
-                                    <h5 class="text-primary">10.5 GB</h5>
+                                    <h5 class="text-primary">10.5 Go</h5>
                                 </div>
                             </a>
                             <a href="#" class="list-group-item px-0 d-flex align-items-center">
@@ -1151,11 +1122,11 @@
                                     </figure>
                                 </div>
                                 <div class="flex-grow-1">
-                                    <p class="mb-0">Other Files</p>
+                                    <p class="mb-0">Autres fichiers</p>
                                     <span class="small text-muted">50 Files</span>
                                 </div>
                                 <div>
-                                    <h5 class="text-primary">2.8 GB</h5>
+                                    <h5 class="text-primary">2.8 Go</h5>
                                 </div>
                             </a>
                         </div>
@@ -1285,8 +1256,7 @@
 
 <!-- Main scripts -->
 <script src="../../vendors/bundle.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/justgage/1.2.9/justgage.min.js"></script>
+
 
 <!-- Apex chart -->
 <script src="https://apexcharts.com/samples/assets/irregular-data-series.js"></script>

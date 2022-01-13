@@ -32,26 +32,26 @@
     <!-- ./ logo -->
 
     
-    <h5>Create account</h5>
+    <h5>Créer un compte</h5>
 
     <!-- form -->
-    <form>
+    <form action="../../assets/php/authentification/register.php" method="POST">
         <div class="form-group">
-            <input type="text" class="form-control" placeholder="Firstname" required autofocus>
+            <input type="text" name="nom" class="form-control" placeholder="Nom" required autofocus>
         </div>
         <div class="form-group">
-            <input type="text" class="form-control" placeholder="Lastname" required>
+            <input type="text" name="prenom" class="form-control" placeholder="Prénom" required>
         </div>
         <div class="form-group">
-            <input type="email" class="form-control" placeholder="Email" required>
+            <input type="email" name="email" class="form-control" placeholder="Email" required>
         </div>
         <div class="form-group">
-            <input type="password" class="form-control" placeholder="Password" required>
+            <input type="password" name="password" class="form-control" placeholder="Mot-de-passe" required>
         </div>
-        <button class="btn btn-primary btn-block">Register</button>
+        <input type="submit" class="btn btn-primary btn-block" value="S'Inscrire">
         <hr>
-        <p class="text-muted">Already have an account?</p>
-        <a href="login.html" class="btn btn-outline-light btn-sm">Sign in!</a>
+        <p class="text-muted">Déjà un compte ?</p>
+        <a href="login.html" class="btn btn-outline-light btn-sm">Se connecter !</a>
     </form>
     <!-- ./ form -->
 

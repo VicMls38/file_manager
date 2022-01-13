@@ -1,3 +1,10 @@
+<?php
+session_start();
+if(!$_SESSION['sess_id']){
+    header('Location: login.html');
+ }
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -18,6 +25,9 @@
     <!-- App css -->
     <link rel="stylesheet" href="../../assets/css/app.min.css" type="text/css">
 
+    <script src="../../assets/js/raphael-2.1.4.min.js"></script>
+<script src="../../assets/js/justgage.js"></script>
+
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -37,32 +47,6 @@
         <div class="header-container">
             <div class="header-body">
                 <div class="header-body-left">
-                    <ul class="navbar-nav">
-                        <li class="nav-item navigation-toggler">
-                            <a href="#" class="nav-link">
-                                <i class="ti-menu"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <div class="header-search-form">
-                                <form>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <button class="btn">
-                                                <i class="ti-search"></i>
-                                            </button>
-                                        </div>
-                                        <input type="text" class="form-control" placeholder="Search something...">
-                                        <div class="input-group-append">
-                                            <button class="btn header-search-close-btn">
-                                                <i data-feather="x"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </li>
-                    </ul>
                 </div>
 
                 <div class="header-body-right">
@@ -195,21 +179,13 @@
                         <li class="nav-item dropdown">
                             <a href="#" class="nav-link profile-nav-link dropdown-toggle" title="User menu"
                                data-toggle="dropdown">
-                                <span class="mr-2 d-sm-inline d-none">Bony Gidden</span>
-                                <figure class="avatar avatar-sm">
-                                    <img src="../../assets/media/image/user/man_avatar3.jpg"
-                                         class="rounded-circle"
-                                         alt="avatar">
-                                </figure>
+                                <span class="mr-2 d-sm-inline d-none"><?php echo($_SESSION['sess_nom']." ".$_SESSION['sess_prenom']); ?></span>
+                                
                             </a>
                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-big">
-                                <div class="text-center py-4"
-                                     data-background-image="../../assets/media/image/image1.jpg">
-                                    <figure class="avatar avatar-lg mb-3 border-0">
-                                        <img src="../../assets/media/image/user/man_avatar3.jpg"
-                                             class="rounded-circle" alt="image">
-                                    </figure>
-                                    <h5 class="mb-0">Bony Gidden</h5>
+                                <div class="text-center py-4">
+                                    
+                                    <h5 class="mb-0"><?php echo($_SESSION['sess_nom']." ".$_SESSION['sess_prenom']); ?></h5>
                                 </div>
                                 <div class="list-group list-group-flush">
                                     <a href="#" class="list-group-item" data-sidebar-target="#settings">Settings</a>
@@ -256,47 +232,28 @@
         <!-- begin::navigation -->
         <div class="navigation">
             <div class="logo">
-                <a href=index.html>
+                <a href=index.php>
                     <img src="../../assets/media/image/logo.png" alt="logo">
                 </a>
             </div>
             <ul>
                 <li>
-                    <a  href="dashboard.html">
+                    <a  href="index.php">
                         <i class="nav-link-icon ti-pie-chart"></i>
                         <span class="nav-link-label">Dashboard</span>
                         <span class="badge badge-danger badge-small">2</span>
                     </a>
                 </li>
                 <li>
-                    <a  href="files.html">
+                    <a  href="files.php">
                         <i class="nav-link-icon ti-file"></i>
-                        <span class="nav-link-label">Files</span>
+                        <span class="nav-link-label">Fichiers</span>
                     </a>
                 </li>
                 <li>
-                    <a  href="activities.html">
-                        <i class="nav-link-icon ti-pulse"></i>
-                        <span class="nav-link-label">Activities</span>
-                        <span class="badge badge-warning">New</span>
-                    </a>
-                </li>
-                <li>
-                    <a  href="users.html">
-                        <i class="nav-link-icon ti-user"></i>
-                        <span class="nav-link-label">Users</span>
-                    </a>
-                </li>
-                <li class="flex-grow-1">
-                    <a href="alert.html">
-                        <i class="nav-link-icon ti-layers"></i>
-                        <span class="nav-link-label">Components</span>
-                    </a>
-                </li>
-                <li>
-                    <a  class="active"  href="settings.html">
+                    <a  class="active" href="settings.php">
                         <i class="nav-link-icon ti-settings"></i>
-                        <span class="nav-link-label">Settings</span>
+                        <span class="nav-link-label">Paramètres</span>
                     </a>
                 </li>
             </ul>
@@ -308,218 +265,123 @@
             <!-- Content -->
             <div class="content">
                     <div class="page-header">
-        <h2>Settings</h2>
+        <h2>Paramètres</h2>
     </div>
 
     <div class="nav nav-pills mb-4" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-        <a class="nav-item nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Account</a>
-        <a class="nav-item nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Information</a>
-        <a class="nav-item nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Security</a>
-        <a class="nav-item nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Social</a>
+        <a class="nav-item nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Compte</a>
+        <a class="nav-item nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Informations</a>
+        <a class="nav-item nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Sécurité</a>
+        
     </div>
     <div class="tab-content" id="v-pills-tabContent">
         <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
             <div class="content-title">
-                <h4>Account</h4>
+                <h4>Compte</h4>
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <form>
-                        <div class="d-flex mb-3">
-                            <figure class="mr-3">
-                                <img width="80" class="rounded-pill" src="../../assets/media/image/user/women_avatar1.jpg" alt="...">
-                            </figure>
-                            <div>
-                                <p>Roxana Roussell</p>
-                                <button class="btn btn-outline-primary mr-2">Change Avatar</button>
-                                <button class="btn btn-outline-danger">Remove Avatar</button>
-                            </div>
-                        </div>
+                    <form action="../../assets/php/parametres/update-compte.php" method="POST">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Name</label>
-                                    <input type="text" class="form-control" value="Roxana Roussell">
+                                    <label>Nom</label>
+                                    <input type="text" name="nom" class="form-control" value="<?php echo($_SESSION['sess_nom']);?>">
                                 </div>
                                 <div class="form-group">
-                                    <label>Username</label>
-                                    <input type="text" class="form-control" value="roxana-roussell">
+                                    <label>Prénom</label>
+                                    <input type="text" name="prenom" class="form-control" value="<?php echo($_SESSION['sess_prenom']);?>">
                                 </div>
                                 <div class="form-group">
                                     <label>Email</label>
-                                    <input type="text" class="form-control" value="wtaffe3@addthis.com">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Role</label>
-                                    <select class="form-control">
-                                        <option value="">All</option>
-                                        <option value="">Admin</option>
-                                        <option value="">User</option>
-                                        <option value="" selected>Staff</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Status</label>
-                                    <select class="form-control">
-                                        <option value="">All</option>
-                                        <option value="" selected>Active</option>
-                                        <option value="">Blocked</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Department</label>
-                                    <select class="form-control">
-                                        <option value="">All</option>
-                                        <option value="">Sales</option>
-                                        <option value="" selected>Development</option>
-                                        <option value="">Management</option>
-                                    </select>
+                                    <input type="text" name="email" class="form-control" value="<?php echo($_SESSION['sess_email']);?>">
                                 </div>
                             </div>
                         </div>
-                        <button class="btn btn-primary">Save Changes</button>
+                        <input type="submit" class="btn btn-primary" value="Sauvegarder">
                     </form>
                 </div>
             </div>
         </div>
         <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
             <div class="content-title">
-                <h4>Information</h4>
+                <h4>Informations</h4>
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <form>
+                    <form action="../../assets/php/parametres/update-informations.php" method="POST">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Birt Date</label>
-                                    <input type="text" class="form-control" value="Roxana Roussell">
+                                    <label>Date de naissance</label>
+                                    <input type="date" name="dateNais" class="form-control" value=" ">
                                 </div>
                                 <div class="form-group">
-                                    <label>Phone</label>
-                                    <input type="text" class="form-control" value="+65195892151">
+                                    <label>Télephone</label>
+                                    <input type="text" name="tel"  class="form-control" value=" ">
                                 </div>
                                 <div class="form-group">
-                                    <label>Website</label>
-                                    <input type="text" class="form-control" value="http://laborasyon.com/">
+                                    <label>Code postal</label>
+                                    <input type="text" name="cp" class="form-control" value=" ">
                                 </div>
                                 <div class="form-group">
-                                    <label>Languages</label>
-                                    <input type="text" class="form-control" value="http://laborasyon.com/">
-                                </div>
-                                <div class="form-group">
-                                    <p>Gender</p>
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
-                                        <label class="custom-control-label" for="customRadio1">Male</label>
-                                    </div>
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
-                                        <label class="custom-control-label" for="customRadio2">Female</label>
-                                    </div>
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input">
-                                        <label class="custom-control-label" for="customRadio3">Other</label>
-                                    </div>
+                                    <label>Ville</label>
+                                    <input type="text" name="ville" class="form-control" value=" ">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Address Line 1</label>
-                                    <input type="text" class="form-control" value="A-65, Belvedere Streets">
+                                    <label>Adresse 1</label>
+                                    <input type="text" name="adresse1" class="form-control" value=" ">
                                 </div>
                                 <div class="form-group">
-                                    <label>Address Line 2</label>
-                                    <input type="text" class="form-control" value="">
+                                    <label>Adresse 2</label>
+                                    <input type="text" name="adresse2" class="form-control" value="">
                                 </div>
                                 <div class="form-group">
-                                    <label>Post Code</label>
-                                    <input type="text" class="form-control" value="1868">
+                                    <label>Région</label>
+                                    <input type="text" name="region" class="form-control" value=" ">
                                 </div>
                                 <div class="form-group">
-                                    <label>City</label>
-                                    <input type="text" class="form-control" value="New York">
-                                </div>
-                                <div class="form-group">
-                                    <label>State</label>
-                                    <input type="text" class="form-control" value="New York">
-                                </div>
-                                <div class="form-group">
-                                    <label>Country</label>
-                                    <input type="text" class="form-control" value="United States">
+                                    <label>Pays</label>
+                                    <input type="text" name="pays" class="form-control" value=" ">
                                 </div>
                             </div>
                         </div>
-                        <button class="btn btn-primary">Save Changes</button>
+                      
+                        <input type="submit" class="btn btn-primary" value="Sauvegarder">
                     </form>
                 </div>
             </div>
         </div>
         <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
             <div class="content-title">
-                <h4>Security</h4>
+                <h4>Sécurité</h4>
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <form>
+                    <form action="../../assets/php/parametres/update-securite.php" method="POST">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Old Password</label>
-                                    <input type="password" class="form-control">
+                                    <label>Ancien mot-de-passe</label>
+                                    <input type="password" name="old_pwd" class="form-control">
                                 </div>
                                 <div class="form-group">
-                                    <label>New Password</label>
-                                    <input type="password" class="form-control">
+                                    <label>Nouveau mot-de-passe</label>
+                                    <input type="password" name="pwd" class="form-control">
                                 </div>
                                 <div class="form-group">
-                                    <label>New Password Repeat</label>
-                                    <input type="password" class="form-control">
+                                    <label>Confirmation mot-de-passe</label>
+                                    <input type="password" name="re_pwd"class="form-control">
                                 </div>
                             </div>
                         </div>
-                        <button class="btn btn-primary">Save Changes</button>
+                        <input type="submit" class="btn btn-primary" value="Sauvegarder">
                     </form>
                 </div>
             </div>
         </div>
-        <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
-            <div class="content-title">
-                <h4>Social</h4>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <form>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Twitter</label>
-                                    <input type="text" class="form-control" value="https://twitter.com/roxana-roussell">
-                                </div>
-                                <div class="form-group">
-                                    <label>Facebook</label>
-                                    <input type="text" class="form-control" value="https://www.facebook.com/roxana-roussell">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Instagram</label>
-                                    <input type="text" class="form-control" value="https://www.instagram.com/roxana-roussell/">
-                                </div>
-                                <div class="form-group">
-                                    <label>GitHub</label>
-                                    <input type="text" class="form-control" value="https://github.com/roxana-roussell">
-                                </div>
-                            </div>
-                        </div>
-                        <button class="btn btn-primary">Save Changes</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
             </div>
             <!-- ./ Content -->
 
@@ -546,7 +408,21 @@
                     <h4>Storage Overview</h4>
                 </div>
                 <div class="sidebar-content">
-                    <div id="justgage_five" class="mb-3"></div>
+                <div id="jauge" class="mb-3 200x160px"></div>
+                    <script>
+                        var g = new JustGage({
+                            id: "jauge",
+                            value: 10,
+                            symbol: '%',
+                            min: 0,
+                            max: 100,
+                            gaugeWidthScale: 0.6,
+                            title: "Stockage utilisé",
+                            valueFontColor: '#FFFFFF',
+                            
+                              
+                        });
+                    </script>
                     <div>
                         <div class="list-group list-group-flush mb-3">
                             <a href="#" class="list-group-item px-0 d-flex align-items-center">
@@ -740,8 +616,7 @@
 
 <!-- Main scripts -->
 <script src="../../vendors/bundle.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/justgage/1.2.9/justgage.min.js"></script>
+
 
 
 <!-- App scripts -->
