@@ -3,6 +3,7 @@ session_start();
 if(!$_SESSION['sess_id']){
     header('Location: login.html');
  }
+ include '../../assets/php/config.php';
 ?>
 
 <!doctype html>
@@ -301,10 +302,9 @@ if(!$_SESSION['sess_id']){
         </div>
         
         <div class="col-xl-9">
-        <form action="../../assets/php/stockage/upload.php" class="dropzone">
-                    
-                    </form>
-                    <input type="button" id="btn_submit" value="Valider"><br><br>
+        <form action="../../assets/php/stockage/upload.php" class="dropzone"></form>
+        <input type="button" id="btn_submit" value="Valider"><br><br>
+
             <div class="content-title mt-0">
                 <h4>Documents</h4>
             </div>
@@ -377,41 +377,58 @@ if(!$_SESSION['sess_id']){
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td></td>
-                        <td>
-                            <a href="#" class="d-flex align-items-center">
-                                <figure class="avatar avatar-sm mr-3">
-                                    <span class="avatar-title bg-warning text-black-50 rounded-pill">
-                                        <i class="ti-folder"></i>
-                                    </span>
-                                </figure>
-                                <span class="d-flex flex-column">
-                                    <span class="text-primary">Design Thinking Project</span>
-                                    <span class="small font-italic">550 KB</span>
-                                </span>
-                            </a>
-                        </td>
-                        <td>3/9/19, 2:40PM</td>
-                      
-                        <td class="text-right">
-                            <div class="dropdown">
-                                <a href="#" class="btn btn-floating" data-toggle="dropdown">
-                                    <i class="ti-more-alt"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a href="#" class="dropdown-item" data-sidebar-target="#view-detail">View
-                                        Details</a>
-                                    <a href="#" class="dropdown-item">Share</a>
-                                    <a href="#" class="dropdown-item">Download</a>
-                                    <a href="#" class="dropdown-item">Copy to</a>
-                                    <a href="#" class="dropdown-item">Move to</a>
-                                    <a href="#" class="dropdown-item">Rename</a>
-                                    <a href="#" class="dropdown-item">Delete</a>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
+                        <?php 
+
+                    try{
+                        $stmt = $conn->prepare("SELECT *, length(Data_Stockage) as poids from stockage WHERE Id_Compte_Stockage = ".$_SESSION['sess_id']."");
+                        $stmt->execute();
+                        // set the resulting array to associative
+                        $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+                        foreach($stmt->fetchAll() as $k=>$v) {
+                          echo('<tr>
+                          <td></td>
+                          <td>
+                              <a href="#" class="d-flex align-items-center">
+                                  <figure class="avatar avatar-sm mr-3">
+                                      <span class="avatar-title bg-warning text-black-50 rounded-pill">
+                                          <i class="ti-folder"></i>
+                                      </span>
+                                  </figure>
+                                  <span class="d-flex flex-column">
+                                      <!-- Nom -->
+                                      <span class="text-primary">'.$v['Nom_Stockage'].'</span>
+                                      <!-- Poids -->
+                                      <span class="small font-italic">'.$v['poids'].'</span>
+                                  </span>
+                              </a>
+                          </td>
+                          <!-- date -->
+                          <td>'.$v['Date_Stockage'].'</td>
+                        
+                          <td class="text-right">
+                              <div class="dropdown">
+                                  <a href="#" class="btn btn-floating" data-toggle="dropdown">
+                                      <i class="ti-more-alt"></i>
+                                  </a>
+                                  <div class="dropdown-menu dropdown-menu-right">
+                                      <a href="#" class="dropdown-item" data-sidebar-target="#view-detail">View
+                                          Details</a>
+                                      <a href="#" class="dropdown-item">Share</a>
+                                      <a href="#" class="dropdown-item">Download</a>
+                                      <a href="#" class="dropdown-item">Copy to</a>
+                                      <a href="#" class="dropdown-item">Move to</a>
+                                      <a href="#" class="dropdown-item">Rename</a>
+                                      <a href="#" class="dropdown-item">Delete</a>
+                                  </div>
+                              </div>
+                          </td>
+                      </tr>');
+                        }
+                      } catch(PDOException $e) {
+                        echo "Error: " . $e->getMessage();
+                      }
+                    
+                    ?>
                     
                     </tbody>
                 </table>
