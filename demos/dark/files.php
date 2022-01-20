@@ -1033,12 +1033,20 @@ if(!$_SESSION['sess_id']){
         Dropzone.autoDiscover = false;
 
         var myDropzone = new Dropzone(".dropzone", { 
+            addRemoveLinks: true,
             autoProcessQueue: false,
+            parallelUploads:10,
        
         });
 
+           
+
         $('#btn_submit').click(function(){
             myDropzone.processQueue();
+        });
+
+        myDropzone.on("queuecomplete", function () {
+            this.removeAllFiles();
         });
         </script>
 
