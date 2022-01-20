@@ -38,11 +38,17 @@ if(!$_SESSION['sess_id']){
     <!-- Select2 -->
     <link rel="stylesheet" href="../../vendors/select2/css/select2.min.css" type="text/css">
 
+        <!-- Prism -->
+        <link rel="stylesheet" href="../../vendors/prism/prism.css" type="text/css">
+
     <!-- App css -->
     <link rel="stylesheet" href="../../assets/css/app.min.css" type="text/css">
 
-    <script src="../../assets/js/raphael-2.1.4.min.js"></script>
-<script src="../../assets/js/justgage.js"></script>
+ 
+
+<!-- Css -->
+<link rel="stylesheet" href="../../vendors/dropzone/dist/min/dropzone.min.css" type="text/css">
+
 
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -404,6 +410,11 @@ if(!$_SESSION['sess_id']){
                     
                     </tbody>
                 </table>
+                
+                <form action="../../assets/php/stockage/upload.php" class="dropzone">
+                </form>
+                <input type="button" id="btn_submit" value="Valider">
+               
             </div>
         </div>
     </div>
@@ -752,6 +763,7 @@ if(!$_SESSION['sess_id']){
                 </div>
             </div>
         </div>
+        
     </div>
 
             </div>
@@ -874,10 +886,10 @@ if(!$_SESSION['sess_id']){
                     </div>
                 </div>
                 <div class="sidebar-footer">
-                    <form action="../../assets/php/stockage/upload.php"  enctype="multipart/form-data" method="POST">
+                    <form   enctype="multipart/form-data" >
 
                         <input type="file" class="btn btn-lg btn-block btn-outline-primary" name="folder">
-                        <input type="submit" value="Envoyer">
+                        <input type="submit" id="btn_submit" value="Envoyer">
                     </form>
                 </div>
             </div>
@@ -978,20 +990,24 @@ if(!$_SESSION['sess_id']){
                             </div>
                         </li>
                     </ul>
+                    
                 </div>
             </div>
+            
             <!-- ./ Sidebar - Settings -->
         </div>
         <!-- ./ Sidebar group -->
     </div>
+    
     <!-- ./ Content wrapper -->
+    
 </div>
 <!-- ./ Layout wrapper -->
 
 <!-- Main scripts -->
 <script src="../../vendors/bundle.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/justgage/1.2.9/justgage.min.js"></script>
+<script src="../../assets/js/raphael-2.1.4.min.js"></script>
+<script src="../../assets/js/justgage.js"></script>
 
 <!-- Datatable -->
 <script src="../../vendors/dataTable/datatables.min.js"></script>
@@ -1001,8 +1017,32 @@ if(!$_SESSION['sess_id']){
 
 <!-- Files page examples -->
 <script src="../../assets/js/examples/files.js"></script>
+   <!-- Prism -->
+   <script src="../../vendors/prism/prism.js"></script>
+
+   <script src="../../vendors/dropzone/dist/min/dropzone.min.js"></script>
+    <!-- Dropzone -->
+    <script src="../../vendors/jquery/jquery-3.3.1.min.js"></script>
+    
+    <!-- <script src="../../assets/js/examples/dropzone.js"></script>-->
 
 <!-- App scripts -->
 <script src="../../assets/js/app.min.js"></script>
+
+<script type='text/javascript'>
+
+        Dropzone.autoDiscover = false;
+
+        var Dropzone = new Dropzone(".dropzone", { 
+            autoProcessQueue: false,
+        });
+
+        $('#btn_submit').click(function(){
+            myDropzone.processQueue();
+        });
+        </script>
+
 </body>
 </html>
+
+
