@@ -299,7 +299,12 @@ if(!$_SESSION['sess_id']){
                 <div id="files"></div>
             </div>
         </div>
+        
         <div class="col-xl-9">
+        <form action="../../assets/php/stockage/upload.php" class="dropzone">
+                    
+                    </form>
+                    <input type="button" id="btn_submit" value="Valider"><br><br>
             <div class="content-title mt-0">
                 <h4>Documents</h4>
             </div>
@@ -411,10 +416,6 @@ if(!$_SESSION['sess_id']){
                     </tbody>
                 </table>
                 
-                <form action="../../assets/php/stockage/upload.php" class="dropzone">
-                    
-                </form>
-                <input type="button" id="btn_submit" value="Valider">
                
             </div>
         </div>
