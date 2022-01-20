@@ -412,6 +412,7 @@ if(!$_SESSION['sess_id']){
                 </table>
                 
                 <form action="../../assets/php/stockage/upload.php" class="dropzone">
+                    
                 </form>
                 <input type="button" id="btn_submit" value="Valider">
                
@@ -1019,12 +1020,10 @@ if(!$_SESSION['sess_id']){
 <script src="../../assets/js/examples/files.js"></script>
    <!-- Prism -->
    <script src="../../vendors/prism/prism.js"></script>
-
-   <script src="../../vendors/dropzone/dist/min/dropzone.min.js"></script>
+      
     <!-- Dropzone -->
-    <script src="../../vendors/jquery/jquery-3.3.1.min.js"></script>
-    
-    <!-- <script src="../../assets/js/examples/dropzone.js"></script>-->
+    <script src="../../vendors/dropzone/dist/min/dropzone.min.js"></script>
+    <script src="../../assets/js/examples/dropzone.js"></script>
 
 <!-- App scripts -->
 <script src="../../assets/js/app.min.js"></script>
@@ -1033,8 +1032,9 @@ if(!$_SESSION['sess_id']){
 
         Dropzone.autoDiscover = false;
 
-        var Dropzone = new Dropzone(".dropzone", { 
+        var myDropzone = new Dropzone(".dropzone", { 
             autoProcessQueue: false,
+       
         });
 
         $('#btn_submit').click(function(){
