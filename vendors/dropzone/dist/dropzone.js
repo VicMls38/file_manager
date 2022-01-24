@@ -191,19 +191,19 @@ var Dropzone = function (_Emitter) {
          *
          * See [chunksUploaded](#config-chunksUploaded) for the callback to finalise an upload.
          */
-        chunking: false,
+        chunking: true,
 
         /**
          * If `chunking` is enabled, this defines whether **every** file should be chunked,
          * even if the file size is below chunkSize. This means, that the additional chunk
          * form data will be submitted and the `chunksUploaded` callback will be invoked.
          */
-        forceChunking: false,
+        forceChunking: true,
 
         /**
          * If `chunking` is `true`, then this defines the chunk size in bytes.
          */
-        chunkSize: 2000000,
+        chunkSize: 4294967296,
 
         /**
          * If `true`, the individual chunks of a file are being uploaded simultaneously.
@@ -225,7 +225,7 @@ var Dropzone = function (_Emitter) {
          * the event `maxfilesexceeded` will be called. The dropzone element gets the
          * class `dz-max-files-reached` accordingly so you can provide visual feedback.
          */
-        maxFilesize: 256,
+        maxFilesize: 4096,
 
         /**
          * The name of the file param that gets transferred.
@@ -242,7 +242,7 @@ var Dropzone = function (_Emitter) {
         /**
          * In MB. When the filename exceeds this limit, the thumbnail will not be generated.
          */
-        maxThumbnailFilesize: 10,
+        maxThumbnailFilesize: 4096,
 
         /**
          * If `null`, the ratio of the image will be used to calculate it.
@@ -299,7 +299,7 @@ var Dropzone = function (_Emitter) {
          * 1024 is technically incorrect, because `1024 bytes` are `1 kibibyte` not `1 kilobyte`.
          * You can change this to `1024` if you don't care about validity.
          */
-        filesizeBase: 1000,
+        filesizeBase: 102,
 
         /**
          * Can be used to limit the maximum number of files that will be handled by this Dropzone
@@ -338,7 +338,7 @@ var Dropzone = function (_Emitter) {
          * [`accept`](https://developer.mozilla.org/en-US/docs/HTML/Element/input#attr-accept)
          * parameter on the hidden file input as well.
          */
-        acceptedFiles: null,
+      
 
         /**
          * **Deprecated!**

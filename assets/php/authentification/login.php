@@ -31,6 +31,11 @@ include("../config.php");
         $_SESSION['sess_pays'] = $row['Pays_Compte'];
         $_SESSION['sess_adresse1'] = $row['Adresse1_Compte'];
         $_SESSION['sess_adresse2'] = $row['Adresse2_Compte'];
+
+        if(file_exists("../stockage/file/".$_SESSION['sess_id']."") == 0){
+          mkdir("../stockage/file/".$_SESSION['sess_id']."");
+        }
+
         header('Location:../../../demos/dark/index.php');
       
       } else {

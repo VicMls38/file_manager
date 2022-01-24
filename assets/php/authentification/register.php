@@ -24,6 +24,7 @@ if(($nom=="") || ($prenom=="") || ($email=="") || ($password=="")){
     $sql = "INSERT INTO compte (Nom_Compte, Prenom_Compte, Email_Compte, Password_Compte) VALUES ('$nom', '$prenom', '$email', '$password')";
     // use exec() because no results are returned
     $conn->exec($sql);
+ 
     //echo "New record created successfully";
     header("location:../../../demos/dark/login.html");
   } catch(PDOException $e) {

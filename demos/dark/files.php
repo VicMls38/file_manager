@@ -302,8 +302,11 @@ if(!$_SESSION['sess_id']){
         </div>
         
         <div class="col-xl-9">
-        <form action="../../assets/php/stockage/upload.php" class="dropzone"></form>
-        <input type="button" id="btn_submit" value="Valider"><br><br>
+        <form action="../../assets/php/stockage/upload.php" enctype="multipart/form-data" class="dropzone">
+        <input type="submit" id="btn_submit" value="Valider">
+        </form>
+       
+        <br><br>
 
             <div class="content-title mt-0">
                 <h4>Documents</h4>
@@ -380,13 +383,30 @@ if(!$_SESSION['sess_id']){
                         <?php 
 
                     try{
-                        $stmt = $conn->prepare("SELECT *, length(Data_Stockage) as poids from stockage WHERE Id_Compte_Stockage = ".$_SESSION['sess_id']."");
+                        $stmt = $conn->prepare("SELECT *, Size_Stockage AS poids from stockage WHERE Id_Compte_Stockage = ".$_SESSION['sess_id']."");
                         $stmt->execute();
                         // set the resulting array to associative
                         $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
                         foreach($stmt->fetchAll() as $k=>$v) {
+                            if($v['poids'] > 1024){
+                                $v['poids'] = round($v['poids'] / 1024);
+                                if($v['poids'] > 1024){
+                                    $v['poids'] = round($v['poids'] / 1024);
+                                    if($v['poids'] > 1024){
+                                        $v['poids'] = round($v['poids'] / 1024);
+                                        $v['poids'] = $v['poids']. ' Go';
+                                    }else{
+                                    $v['poids'] = $v['poids']. ' Mo';
+                                    }
+                                }else{
+                                $v['poids'] = $v['poids']. ' Ko';
+                                }
+                            }else{
+                                $v['poids'] = $v['poids']. ' Octets';
+                            }
                           echo('<tr>
-                          <td></td>
+                          <td class=" dt-body-center"><div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="customCheck'.$v['Id_Stockage'].'"><label class="custom-control-label" for="customCheck'.$v['Id_Stockage'].'"></label></div></td>
+                          
                           <td>
                               <a href="#" class="d-flex align-items-center">
                                   <figure class="avatar avatar-sm mr-3">
@@ -398,7 +418,7 @@ if(!$_SESSION['sess_id']){
                                       <!-- Nom -->
                                       <span class="text-primary">'.$v['Nom_Stockage'].'</span>
                                       <!-- Poids -->
-                                      <span class="small font-italic">'.$v['poids'].'</span>
+                                      <span class="small font-italic">'.$v['poids'].' </span>
                                   </span>
                               </a>
                           </td>
@@ -905,9 +925,9 @@ if(!$_SESSION['sess_id']){
                     </div>
                 </div>
                 <div class="sidebar-footer">
-                    <form   enctype="multipart/form-data" >
+                    <form   action ="../../assets/php/stockage/upload.php" enctype="multipart/form-data" method="POST" >
 
-                        <input type="file" class="btn btn-lg btn-block btn-outline-primary" name="folder">
+                        <input type="file" class="btn btn-lg btn-block btn-outline-primary" name="file">
                         <input type="submit" id="btn_submit" value="Envoyer">
                     </form>
                 </div>
@@ -1054,6 +1074,7 @@ if(!$_SESSION['sess_id']){
             addRemoveLinks: true,
             autoProcessQueue: false,
             parallelUploads:10,
+            maxFilesize: 4096,
        
         });
 
@@ -1061,7 +1082,7 @@ if(!$_SESSION['sess_id']){
 
         $('#btn_submit').click(function(){
             myDropzone.processQueue();
-        });
+        });*/
 
         myDropzone.on("queuecomplete", function () {
             this.removeAllFiles();
