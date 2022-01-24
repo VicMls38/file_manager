@@ -45,6 +45,13 @@ if(!$_SESSION['sess_id']){
     <!-- App css -->
     <link rel="stylesheet" href="../../assets/css/app.min.css" type="text/css">
 
+
+    <!-- Style -->
+<link rel="stylesheet" href="../../vendors/Collapsible-Tree/hummingbird-treeview.css" type="text/css">
+
+<!-- Javascript -->
+<script src="../../vendors/Collapsible-Tree/hummingbird-treeview.min.js"></script>
+
  
 
 <!-- Css -->
@@ -296,10 +303,102 @@ if(!$_SESSION['sess_id']){
     <div class="row">
         <div class="col-xl-3 files-sidebar">
             <div class="card border-0">
-                <h6 class="card-title">My Folders</h6>
-                <div id="files"></div>
+                <h6 class="card-title">Mes Dossiers</h6>
+                <div id="files">
+
+ 
+
+<style>
+
+
+h1 {padding: 40px; text-align: center; font-size: 1.5em;}
+
+li a {text-decoration : none; color : #2d2f31;}
+
+.ul{
+  background-color: white;
+}
+
+.span {
+    width: 201%;
+  padding : 10px;
+  background : #2d2f31; 
+  color : white;
+  font-size : 1.2em;
+  font-variant : small-caps;
+  cursor : pointer;
+  display: block;
+}
+
+.span::after {
+  float: right;
+  right: 10%;
+  content: "+";
+}
+
+.slide {
+  clear:both;
+  width:100%;
+  height:0px;
+  overflow: hidden;
+  text-align: center;
+  transition: height .4s ease;
+}
+<?php 
+
+$stmt = $conn->prepare("SELECT * FROM dossier Where Id_Compte_Dossier = ".$_SESSION['sess_id']." AND Parent_Dossier = '1'");
+$stmt->execute();
+
+// set the resulting array to associative
+$result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+$i = 0;
+foreach(($stmt->fetchAll()) as $k=>$v) {
+    echo("
+#touch".$i." {position: absolute; opacity: 0; height: 0px;}    
+
+#touch".$i.":checked + .slide {height: auto;} 
+");
+$i++;
+}
+
+?>
+</style>
+    <?php
+    $stmt = $conn->prepare("SELECT * FROM dossier Where Id_Compte_Dossier = ".$_SESSION['sess_id']." AND Parent_Dossier = '1'");
+    $stmt->execute();
+    
+    // set the resulting array to associative
+    $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+    $i = 0;
+    foreach(($stmt->fetchAll()) as $k=>$v) {
+
+    echo('<label for="touch'.$i.'"><div class="span"><i class="fa fa-folder" aria-hidden="true"></i>&nbsp;&nbsp;'.$v['Nom_Dossier'].'</div></label>               
+    <input type="checkbox" id="touch'.$i.'"> ');
+
+    $stmt1 = $conn->prepare("SELECT * FROM dossier Where Id_Compte_Dossier = ".$_SESSION['sess_id']." AND Parent_Dossier = '0' AND Id_Parent_Dossier = ".$v['Id_Dossier']."");
+    $stmt1->execute();
+    
+    // set the resulting array to associative
+    $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+    $j = 0;
+    foreach(($stmt1->fetchAll()) as $k1=>$v1) {
+    echo('
+    <ul class="slide ul">
+    <li style="color:black;"><i class="fa fa-file" aria-hidden="true"></i>&nbsp;&nbsp;<a style="color:black; cursor:pointer">'.$v1['Nom_Dossier'].'</a></li> 
+    </ul>
+    ');
+        $j++;
+    }
+    $i++;
+    }
+    ?>
+  
             </div>
         </div>
+    </div>
+    <script>
+        $('.dd').nestable({ /* config options */ });
+    </script>
         
         <div class="col-xl-9">
         <form action="../../assets/php/stockage/upload.php" enctype="multipart/form-data" class="dropzone">
@@ -318,7 +417,7 @@ if(!$_SESSION['sess_id']){
                             Add
                         </a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">New Folder</a>
+                            <a class="dropdown-item" data-toggle="modal" data-target="#exampleModal" style="cursor:pointer;">New Folder</a>
                             <a class="dropdown-item" href="#">New File</a>
                         </div>
                     </li>
@@ -1041,6 +1140,72 @@ if(!$_SESSION['sess_id']){
     <!-- ./ Content wrapper -->
     
 </div>
+
+
+<!-- modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="" id="exampleModalLabel">Nouveau dossier</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <i class="ti-close"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="../../assets/php/tree/AddFolder.php" method="POST" >
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Nom du dossier:</label>
+            <input type="text" class="form-control" id="recipient-name" name="nom">
+          </div>
+          
+          <label for="racine">C'est un dossier racine ?</label><br>
+          <select name="racine" id="racine" onChange="getCombo(this);">
+              <option value="1" selected>Racine</option>
+              <option value="0" >Non racine</option>
+           
+              
+          </select>
+          <div id="show_select" style="display:none;">
+          <label for="parent_folder">Selectionner un dossier parent : </label><br>
+          <select name="parent_folder" >
+              <?php
+
+                $stmt = $conn->prepare("SELECT * FROM dossier WHERE Id_Compte_Dossier = ".$_SESSION['sess_id']." AND Parent_Dossier = '1'");
+                $stmt->execute();
+
+                $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+                foreach(($stmt->fetchAll()) as $k=>$v) {
+                echo('<option value="'.$v['Id_Dossier'].'">'.$v['Nom_Dossier'].'</option>');
+                }
+             
+
+              ?>
+          </select>
+          </div>
+         
+       </div>
+       <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer
+          </button>
+          <input type="submit" class="btn btn-primary" value="Créer le dossier">
+       </div>
+       </form>
+     </div>
+  </div>
+</div>
+
+<script>
+    
+
+   function getCombo() {
+     if (document.getElementById("racine").value == "1"){
+             document.getElementById("show_select").style.display="none";
+         }else{
+             document.getElementById("show_select").style.display="block";
+         }
+     }
+</script>
 <!-- ./ Layout wrapper -->
 
 <!-- Main scripts -->
@@ -1054,8 +1219,6 @@ if(!$_SESSION['sess_id']){
 <!-- Jstree -->
 <script src="../../vendors/jstree/jstree.min.js"></script>
 
-<!-- Files page examples -->
-<script src="../../assets/js/examples/files.js"></script>
    <!-- Prism -->
    <script src="../../vendors/prism/prism.js"></script>
       
@@ -1088,6 +1251,7 @@ if(!$_SESSION['sess_id']){
             this.removeAllFiles();
         });
         </script>
+        <script src="../../vendors/jquery/jquery-3.3.1.min.js"></script>
 
 </body>
 </html>
