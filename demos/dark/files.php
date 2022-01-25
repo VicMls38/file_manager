@@ -64,6 +64,10 @@ if(!$_SESSION['sess_id']){
     <![endif]-->
 </head>
 <body class="dark">
+
+
+
+
 <!-- Preloader -->
 <div class="preloader">
     <div class="preloader-icon"></div>
@@ -320,7 +324,7 @@ li a {text-decoration : none; color : #2d2f31;}
 }
 
 .span {
-    width: 201%;
+    width: 100%;
   padding : 10px;
   background : #2d2f31; 
   color : white;
@@ -372,10 +376,10 @@ $i++;
     $i = 0;
     foreach(($stmt->fetchAll()) as $k=>$v) {
 
-    echo('<label for="touch'.$i.'"><div class="span"><i class="fa fa-folder" aria-hidden="true"></i>&nbsp;&nbsp;'.$v['Nom_Dossier'].'</div></label>               
+    echo('<label for="touch'.$i.'" style="width:100%;"> <div class="span"><i class="fa fa-folder" aria-hidden="true"></i>&nbsp;&nbsp;'.$v['Nom_Dossier'].'</div>    </label>      
     <input type="checkbox" id="touch'.$i.'"> ');
 
-    $stmt1 = $conn->prepare("SELECT * FROM dossier Where Id_Compte_Dossier = ".$_SESSION['sess_id']." AND Parent_Dossier = '0' AND Id_Parent_Dossier = ".$v['Id_Dossier']."");
+    $stmt1 = $conn->prepare("SELECT * FROM stockage Where Id_Compte_Stockage = '".$_SESSION['sess_id']."' AND Id_Parent_Dossier_Stockage != 0 AND Id_Parent_Dossier_Stockage = ".$v['Id_Dossier']."");
     $stmt1->execute();
     
     // set the resulting array to associative
@@ -384,7 +388,7 @@ $i++;
     foreach(($stmt1->fetchAll()) as $k1=>$v1) {
     echo('
     <ul class="slide ul">
-    <li style="color:black;"><i class="fa fa-file" aria-hidden="true"></i>&nbsp;&nbsp;<a style="color:black; cursor:pointer">'.$v1['Nom_Dossier'].'</a></li> 
+    <li style="color:black;"><i class="fa fa-file" aria-hidden="true"></i>&nbsp;&nbsp;<a style="color:black; cursor:pointer">'.$v1['Nom_Stockage'].'</a></li> 
     </ul>
     ');
         $j++;
@@ -532,13 +536,10 @@ $i++;
                                   <div class="dropdown-menu dropdown-menu-right">
                                       <a href="#" class="dropdown-item" data-sidebar-target="#view-detail">View
                                           Details</a>
-                                      <a href="#" class="dropdown-item">Share</a>
-                                      <a href="#" class="dropdown-item">Download</a>
-                                      <a href="#" class="dropdown-item">Copy to</a>
-                                      <a href="#" class="dropdown-item">Move to</a>
-                                      <a href="#" class="dropdown-item">Rename</a>
-                                      <a href="#" class="dropdown-item">Delete</a>
-                                  </div>
+                                      <a href="#" class="dropdown-item">Télecharger</a>
+                                      <a href="#" id="'.$v['Id_Stockage'].'" value="'.$v['Id_Stockage'].'" onclick="Id(this.id);" data-toggle="modal" data-target="#exampleModal1" class="dropdown-item">Déplacer</a>
+                                      <a href="#" class="dropdown-item">Renomer</a>
+                                      <a href="#" id="'.$v['Id_Stockage'].'" value="'.$v['Id_Stockage'].'" onclick="Id2(this.id);" data-toggle="modal" data-target="#exampleModal3" class="dropdown-item">Supprimer</a>                                  </div>
                               </div>
                           </td>
                       </tr>');
@@ -552,7 +553,17 @@ $i++;
                     </tbody>
                 </table>
                 
-               
+               <script>
+                   function Id(val){ 
+                       console.log(val);
+                    document.getElementById("inputTypeHidden").value = val
+                    }
+
+                    function Id2(val){ 
+                       console.log(val);
+                    document.getElementById("inputTypeHidden3").value = val
+                    }
+               </script>
             </div>
         </div>
     </div>
@@ -1033,6 +1044,9 @@ $i++;
             </div>
             <!-- ./ Sidebar - Storage -->
 
+
+
+
             <!-- Sidebar - File info -->
             <div class="sidebar" id="view-detail">
                 <div class="sidebar-header">
@@ -1142,7 +1156,7 @@ $i++;
 </div>
 
 
-<!-- modal -->
+<!-- modal nouveau dossier -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -1158,54 +1172,98 @@ $i++;
             <label for="recipient-name" class="col-form-label">Nom du dossier:</label>
             <input type="text" class="form-control" id="recipient-name" name="nom">
           </div>
-          
-          <label for="racine">C'est un dossier racine ?</label><br>
-          <select name="racine" id="racine" onChange="getCombo(this);">
-              <option value="1" selected>Racine</option>
-              <option value="0" >Non racine</option>
-           
-              
-          </select>
-          <div id="show_select" style="display:none;">
-          <label for="parent_folder">Selectionner un dossier parent : </label><br>
-          <select name="parent_folder" >
-              <?php
-
-                $stmt = $conn->prepare("SELECT * FROM dossier WHERE Id_Compte_Dossier = ".$_SESSION['sess_id']." AND Parent_Dossier = '1'");
-                $stmt->execute();
-
-                $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
-                foreach(($stmt->fetchAll()) as $k=>$v) {
-                echo('<option value="'.$v['Id_Dossier'].'">'.$v['Nom_Dossier'].'</option>');
-                }
-             
-
-              ?>
-          </select>
-          </div>
          
-       </div>
+      
        <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer
           </button>
-          <input type="submit" class="btn btn-primary" value="Créer le dossier">
+          <input type="submit" class="btn btn-primary" value="deplacer">
        </div>
        </form>
+      </div>
      </div>
   </div>
 </div>
 
-<script>
-    
 
-   function getCombo() {
-     if (document.getElementById("racine").value == "1"){
-             document.getElementById("show_select").style.display="none";
-         }else{
-             document.getElementById("show_select").style.display="block";
-         }
-     }
-</script>
+            <!-- modal déplacer -->
+            <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="" id="exampleModalLabel1">Déplacer fichier : </h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <i class="ti-close"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="../../assets/php/tree/Deplacer.php" method="POST" >
+    
+          <input type="hidden" name="hidden" id="inputTypeHidden1" value="">
+          
+          <label for="dossier">Déplacer vers ?</label><br>
+          <select name="dossier" id="dossier" class="form-control">
+              <?php
+               $stmt = $conn->prepare("SELECT * FROM dossier WHERE Id_Compte_Dossier = ".$_SESSION['sess_id']."");
+               $stmt->execute();
+
+               $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+               foreach(($stmt->fetchAll()) as $k=>$v) {
+               echo('<option value="'.$v['Id_Dossier'].'">'.$v['Nom_Dossier'].'</option>');
+               }
+              ?>
+                
+          </select>
+    
+         
+       <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer
+          </button>
+          <input type="submit" class="btn btn-primary" value="deplacer">
+       </div>
+       </form>
+     </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- modal supprimer -->
+<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="" id="exampleModalLabel3"> Supprimer fichier : </h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <i class="ti-close"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="../../assets/php/tree/Supprimer.php" method="POST" >
+    
+          <input type="hidden" name="hidden" id="inputTypeHidden3" value="">
+         
+       <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer
+          </button>
+          <input type="submit" class="btn btn-primary" value="Supprimer">
+       </div>
+       </form>
+     </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<!-- -------------------------------------- -->
+
+
+
+
 <!-- ./ Layout wrapper -->
 
 <!-- Main scripts -->

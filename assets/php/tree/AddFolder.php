@@ -37,7 +37,8 @@ if(!$_SESSION['sess_id']){
 include '../config.php';
 
 $nom = $_POST['nom'];
-$racine = $_POST['racine'];
+$nom = strtolower($nom);
+
 
 if($racine == "1"){
 
@@ -46,20 +47,18 @@ $stmt = $conn->prepare("INSERT INTO dossier (Id_Compte_Dossier, Nom_Dossier, Par
 
 $stmt->bindParam(':Id_Compte_Dossier', $_SESSION['sess_id']);
 $stmt->bindParam(':Nom_Dossier', $nom);
-$stmt->bindParam(':Parent_Dossier', $racine);
 $stmt->execute();
 header("location:../../../demos/dark/files.php");
 
 }else{
 
     $racine = 0;
-    $parent = $_POST['parent_folder'];
-    $stmt = $conn->prepare("INSERT INTO dossier (Id_Compte_Dossier, Nom_Dossier, Parent_Dossier, Id_Parent_Dossier) VALUES (:Id_Compte_Dossier, :Nom_Dossier, :Parent_Dossier, :Id_Parent_Dossier)");
+    $parent = 1;
+    $stmt = $conn->prepare("INSERT INTO dossier (Id_Compte_Dossier, Nom_Dossier, Parent_Dossier) VALUES (:Id_Compte_Dossier, :Nom_Dossier, :Parent_Dossier)");
     
     $stmt->bindParam(':Id_Compte_Dossier', $_SESSION['sess_id']);
     $stmt->bindParam(':Nom_Dossier', $nom);
-    $stmt->bindParam(':Parent_Dossier', $racine);
-    $stmt->bindParam(':Id_Parent_Dossier', $parent);
+    $stmt->bindParam(':Parent_Dossier', $parent);
     $stmt->execute();
     header("location:../../../demos/dark/files.php");
 }
