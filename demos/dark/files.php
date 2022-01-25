@@ -337,6 +337,12 @@ li a {text-decoration : none; color : #2d2f31;}
 .span::after {
   float: right;
   right: 10%;
+  content: "-";
+}
+
+.span::before {
+  float: right;
+  right: 10%;
   content: "+";
 }
 
@@ -556,7 +562,7 @@ $i++;
                <script>
                    function Id(val){ 
                        console.log(val);
-                    document.getElementById("inputTypeHidden").value = val
+                    document.getElementById("inputTypeHidden1").value = val
                     }
 
                     function Id2(val){ 
