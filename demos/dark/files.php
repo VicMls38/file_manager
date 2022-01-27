@@ -544,8 +544,9 @@ $i++;
                                           Details</a>
                                       <a href="#" class="dropdown-item">Télecharger</a>
                                       <a href="#" id="'.$v['Id_Stockage'].'" value="'.$v['Id_Stockage'].'" onclick="Id(this.id);" data-toggle="modal" data-target="#exampleModal1" class="dropdown-item">Déplacer</a>
-                                      <a href="#" class="dropdown-item">Renomer</a>
-                                      <a href="#" id="'.$v['Id_Stockage'].'" value="'.$v['Id_Stockage'].'" onclick="Id2(this.id);" data-toggle="modal" data-target="#exampleModal3" class="dropdown-item">Supprimer</a>                                  </div>
+                                      <a href="#" id="'.$v['Id_Stockage'].'" value="'.$v['Id_Stockage'].'" onclick="Id3(this.id);" data-toggle="modal" data-target="#exampleModal4" class="dropdown-item">Renommer</a>                              
+                                      <a href="#" id="'.$v['Id_Stockage'].'" value="'.$v['Id_Stockage'].'" onclick="Id2(this.id);" data-toggle="modal" data-target="#exampleModal3" class="dropdown-item">Supprimer</a> 
+                                    </div>
                               </div>
                           </td>
                       </tr>');
@@ -568,6 +569,11 @@ $i++;
                     function Id2(val){ 
                        console.log(val);
                     document.getElementById("inputTypeHidden3").value = val
+                    }
+
+                    function Id3(val){ 
+                       console.log(val);
+                    document.getElementById("inputTypeHidden4").value = val
                     }
                </script>
             </div>
@@ -1226,6 +1232,37 @@ $i++;
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer
           </button>
           <input type="submit" class="btn btn-primary" value="deplacer">
+       </div>
+       </form>
+     </div>
+    </div>
+  </div>
+</div>
+
+
+  <!-- modal Renomer -->
+  <div class="modal fade" id="exampleModal4" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="" id="exampleModalLabel4">Renomer fichier : </h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <i class="ti-close"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="../../assets/php/tree/Renomer.php" method="POST" >
+    
+          <input type="hidden" name="hidden" id="inputTypeHidden4" value="">
+          
+          <label for="renomer">Renommer ?</label><br>
+          <input type="text" class="form-control" name="renomer">
+    
+         
+       <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer
+          </button>
+          <input type="submit" class="btn btn-primary" value="Confirmer">
        </div>
        </form>
      </div>
