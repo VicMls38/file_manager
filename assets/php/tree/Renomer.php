@@ -21,18 +21,18 @@ $stmt = $conn->prepare("SELECT Data_Stockage FROM stockage where Id_Compte_Stock
         $data = explode(".", $data);
         $data1 = $data[0]; // Nom
         $data2 = $data[1]; // Extansion
-
-        $sql = "UPDATE stockage SET Data_Stockage = '".$debut_file.$_POST['renomer'].".".$data2."' WHERE Id_Stockage = '".$_POST['hidden']."' AND Id_Compte_Stockage = '".$_SESSION['sess_id']."' ";
+        $date= date("Y-m-d");
+        $sql = "UPDATE stockage SET Data_Stockage = '".$debut_file.$_POST['renomer'].".".$data2."', Date_Modif_Stockage = '".$date."' WHERE Id_Stockage = '".$_POST['hidden']."' AND Id_Compte_Stockage = '".$_SESSION['sess_id']."' ";
         echo($sql);
         // Prepare statement
         $stmt = $conn->prepare($sql);
 
         // execute the query
         $stmt->execute();
-   
+        
         rename("../stockage/file/".$_SESSION['sess_id']."/".$data1.".".$data2."","../stockage/file/".$_SESSION['sess_id']."/".$_POST['renomer'].".".$data2."");
 
-        $sql = "UPDATE stockage SET Nom_Stockage = '".$_POST['renomer'].".".$data2."' WHERE Id_Stockage = '".$_POST['hidden']."' AND Id_Compte_Stockage = '".$_SESSION['sess_id']."' ";
+        $sql = "UPDATE stockage SET Nom_Stockage = '".$_POST['renomer'].".".$data2."', Date_Modif_Stockage = '".$date."' WHERE Id_Stockage = '".$_POST['hidden']."' AND Id_Compte_Stockage = '".$_SESSION['sess_id']."' ";
         // Prepare statement
         $stmt = $conn->prepare($sql);
         // execute the query
@@ -41,7 +41,7 @@ $stmt = $conn->prepare("SELECT Data_Stockage FROM stockage where Id_Compte_Stock
 }
 
 
-//header("location:../../../demos/dark/files.php");
+header("location:../../../demos/dark/files.php");
 
 
 

@@ -48,14 +48,15 @@ if(isset($_POST['request'])){
                 $path = $target_dir.$_FILES["file"]["name"];
                 $name = $_FILES["file"]["name"];
 
-                $stmt = $conn->prepare("INSERT INTO stockage (Id_Compte_Stockage, Nom_Stockage ,Type_Stockage,Size_Stockage,Data_Stockage, Date_Stockage)
-                VALUES (:Id_Compte_Stockage, :Nom_Stockage, :Type_Stockage, :Size_Stockage, :Data_Stockage, :Date_Stockage)");
+                $stmt = $conn->prepare("INSERT INTO stockage (Id_Compte_Stockage, Nom_Stockage ,Type_Stockage,Size_Stockage,Data_Stockage, Date_Stockage, Date_Modif_Stockage)
+                VALUES (:Id_Compte_Stockage, :Nom_Stockage, :Type_Stockage, :Size_Stockage, :Data_Stockage, :Date_Stockage, :Date_Modif_Stockage)");
                 $stmt->bindParam(':Id_Compte_Stockage', $_SESSION['sess_id']);
                 $stmt->bindParam(':Nom_Stockage', $name);
                 $stmt->bindParam(':Type_Stockage', $mime);
                 $stmt->bindParam(':Size_Stockage', $size);
                 $stmt->bindParam(':Data_Stockage', $path);
                 $stmt->bindParam(':Date_Stockage', $date);
+                $stmt->bindParam(':Date_Modif_Stockage', $date);
                 $stmt->execute();
     
                 
