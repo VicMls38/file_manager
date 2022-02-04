@@ -15,55 +15,38 @@ include '../../assets/php/config.php';
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Filedash - File Manager Dashboard</title>
 
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="../../assets/media/image/favicon.png" />
+   <!-- Favicon -->
+   <link rel="shortcut icon" href="../../assets/media/image/favicon.png"/>
 
-    <!-- Main css -->
-    <link rel="stylesheet" href="../../vendors/bundle.css" type="text/css">
+<!-- Main css -->
+<link rel="stylesheet" href="../../vendors/bundle.css" type="text/css">
 
-    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet">
 
-    <!-- quill -->
-    <link href="../../vendors/quill/quill.snow.css" rel="stylesheet" type="text/css">
-    <!-- quill -->
-    <link href="../../vendors/jstree/themes/default/style.min.css" rel="stylesheet" type="text/css">
+<!-- quill -->
+<link href="../../vendors/quill/quill.snow.css" rel="stylesheet" type="text/css">
+<!-- quill -->
+<link href="../../vendors/jstree/themes/default/style.min.css" rel="stylesheet" type="text/css">
 
-    <!-- Clockpicker -->
-    <link rel="stylesheet" href="../../vendors/clockpicker/bootstrap-clockpicker.min.css" type="text/css">
+<!-- Clockpicker -->
+<link rel="stylesheet" href="../../vendors/clockpicker/bootstrap-clockpicker.min.css" type="text/css">
 
-    <!-- Datepicker -->
-    <link rel="stylesheet" href="../../vendors/datepicker/daterangepicker.css" type="text/css">
+<!-- Datepicker -->
+<link rel="stylesheet" href="../../vendors/datepicker/daterangepicker.css" type="text/css">
 
-    <!-- Datatable -->
-    <link rel="stylesheet" href="../../vendors/dataTable/datatables.min.css" type="text/css">
+<!-- Datatable -->
+<link rel="stylesheet" href="../../vendors/dataTable/datatables.min.css" type="text/css">
 
-    <!-- Select2 -->
-    <link rel="stylesheet" href="../../vendors/select2/css/select2.min.css" type="text/css">
+<!-- Select2 -->
+<link rel="stylesheet" href="../../vendors/select2/css/select2.min.css" type="text/css">
 
-    <!-- Prism -->
-    <link rel="stylesheet" href="../../vendors/prism/prism.css" type="text/css">
+<!-- App css -->
+<link rel="stylesheet" href="../../assets/css/app.min.css" type="text/css">
 
-    <!-- App css -->
-    <link rel="stylesheet" href="../../assets/css/app.min.css" type="text/css">
-
-
-    <!-- Style -->
-    <link rel="stylesheet" href="../../vendors/Collapsible-Tree/hummingbird-treeview.css" type="text/css">
-
-    <!-- Javascript -->
-    <script src="../../vendors/Collapsible-Tree/hummingbird-treeview.min.js"></script>
-
-
-
-    <!-- Css -->
-    <link rel="stylesheet" href="../../vendors/dropzone/dist/min/dropzone.min.css" type="text/css">
-
-    <script src="../../assets/js/raphael-2.1.4.min.js"></script>
-    <script src="../../assets/js/justgage.js"></script>
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js%22%3E</script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js%22%3E</script>
+<![endif]-->
 </head>
 
 <body class="dark">
@@ -471,7 +454,7 @@ include '../../assets/php/config.php';
                                                     $v['poids'] = $v['poids'] . ' Octets';
                                                 }
                                                 echo ('<tr>
-                          <td class=" dt-body-center"><div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="customCheck' . $v['Id_Stockage'] . '"><label class="custom-control-label" for="customCheck' . $v['Id_Stockage'] . '"></label></div></td>
+                          <td></td>
                           
                           <td>
                               <a href="#" class="d-flex align-items-center">
@@ -1010,52 +993,22 @@ include '../../assets/php/config.php';
 
     <!-- ./ Layout wrapper -->
 
-    <!-- Main scripts -->
-    <script src="../../vendors/bundle.js"></script>
-    <script src="../../assets/js/raphael-2.1.4.min.js"></script>
-    <script src="../../assets/js/justgage.js"></script>
+  <!-- Main scripts -->
+<script src="../../vendors/bundle.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js%22%3E</script>"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/justgage/1.2.9/justgage.min.js%22%3E"></script>
 
-    <!-- Datatable -->
-    <script src="../../vendors/dataTable/datatables.min.js"></script>
+<!-- Datatable -->
+<script src="../../vendors/dataTable/datatables.min.js"></script>
 
-    <!-- Jstree -->
-    <script src="../../vendors/jstree/jstree.min.js"></script>
+<!-- Jstree -->
+<script src="../../vendors/jstree/jstree.min.js"></script>
 
-    <!-- Prism -->
-    <script src="../../vendors/prism/prism.js"></script>
+<!-- Files page examples -->
+<script src="../../assets/js/examples/files.js"></script>
 
-    <!-- Dropzone -->
-    <script src="../../vendors/dropzone/dist/min/dropzone.min.js"></script>
-    <script src="../../assets/js/examples/dropzone.js"></script>
-
-    <!-- App scripts -->
-    <script src="../../assets/js/app.min.js"></script>
-
-    <script type='text/javascript'>
-        Dropzone.autoDiscover = false;
-
-        var myDropzone = new Dropzone(".dropzone", {
-            addRemoveLinks: true,
-            autoProcessQueue: false,
-            parallelUploads: 10,
-            maxFilesize: 4096,
-
-        });
-
-
-
-        $('#btn_submit').click(function() {
-            myDropzone.processQueue();
-
-        });
-
-        myDropzone.on("queuecomplete", function() {
-            this.removeAllFiles();
-            location.reload();
-        });
-    </script>
-
-    <script src="../../vendors/jquery/jquery-3.3.1.min.js"></script>
+<!-- App scripts -->
+<script src="../../assets/js/app.min.js"></script>
 
 </body>
 
